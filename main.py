@@ -6,7 +6,7 @@ app =  FastAPI()
 
 @app.get("/")
 def index():
-    return {'data':'blog list'}
+    return {'data':'blaog list'}
 
 @app.get("/blog")
 def index(limit:int = 10, published:bool = True, sort:Optional[str] = None):
