@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-import schemas, database, models
+import schemas, database, models, Jtoken
 from hashing import Hash
 
 
@@ -19,7 +19,6 @@ def login(request:schemas.Login, db: Session = Depends(get_db)):
     if not Hash.verify(user.password, request.password):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid Credentials")
     
-    
-
-    
-    return user
+  
+    access_token = Jtoken.create_access_token(data={"sub": user.email})
+    return {"access_token": access_token, "token_type": "bearer"}
